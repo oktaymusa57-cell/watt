@@ -14,20 +14,22 @@
     </script>
 
     <style>
+        /* --- KARANLIK TEMA RENKLERİ --- */
         :root { 
-            --primary: #0A58CA; 
-            --primary-hover: #084298;
-            --dark: #042456;
-            --bg-color: #F3F4F6;
-            --surface: #FFFFFF;
-            --text-dark: #111827;
-            --text-muted: #6B7280;
-            --border-color: #E5E7EB;
+            --primary: #2563EB; 
+            --primary-hover: #1D4ED8;
+            --dark: #0B0F19; 
+            --bg-color: #0B0F19;
+            --surface: #111827; 
+            --surface-hover: #1F2937;
+            --text-dark: #F9FAFB; 
+            --text-muted: #9CA3AF;
+            --border-color: #374151;
             
-            --success-bg: #ECFDF5; --success-text: #059669;
-            --warning-bg: #FFFBEB; --warning-text: #D97706;
-            --danger-bg: #FEF2F2; --danger-text: #DC2626;
-            --info-bg: #EFF6FF; --info-text: #2563EB;
+            --success-bg: rgba(5, 150, 105, 0.1); --success-text: #10B981;
+            --warning-bg: rgba(217, 119, 6, 0.1); --warning-text: #F59E0B;
+            --danger-bg: rgba(220, 38, 38, 0.1); --danger-text: #EF4444;
+            --info-bg: rgba(37, 99, 235, 0.1); --info-text: #3B82F6;
         }
 
         body { 
@@ -40,132 +42,169 @@
 
         /* --- TOAST BİLDİRİM SİSTEMİ --- */
         #toastBox { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; align-items: flex-end; z-index: 9999; }
-        .toast-msg { width: 350px; background: var(--surface); color: var(--text-dark); font-weight: 500; font-size: 14px; margin-bottom: 12px; padding: 16px; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 12px; transform: translateX(120%); animation: slideIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; border-left: 5px solid; }
-        .toast-msg.success { border-color: var(--success-text); }
+        .toast-msg { width: 350px; background: var(--surface); color: var(--text-dark); font-weight: 500; font-size: 14px; margin-bottom: 12px; padding: 16px; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; transform: translateX(120%); animation: slideIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; border-left: 5px solid; border: 1px solid var(--border-color); }
+        .toast-msg.success { border-left-color: var(--success-text); }
         .toast-msg.success i { color: var(--success-text); }
-        .toast-msg.error { border-color: var(--danger-text); }
+        .toast-msg.error { border-left-color: var(--danger-text); }
         .toast-msg.error i { color: var(--danger-text); }
-        .toast-msg.info { border-color: var(--primary); }
+        .toast-msg.info { border-left-color: var(--primary); }
         .toast-msg.info i { color: var(--primary); }
         @keyframes slideIn { to { transform: translateX(0); } }
         @keyframes slideOut { to { transform: translateX(120%); opacity: 0; } }
 
         /* --- AUTH EKRANI --- */
-        .auth-section { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%); position: relative; overflow: hidden; }
-        .auth-section::before { content: ''; position: absolute; width: 600px; height: 600px; background: rgba(255,255,255,0.05); border-radius: 50%; top: -200px; left: -100px; }
-        .auth-section::after { content: ''; position: absolute; width: 400px; height: 400px; background: rgba(255,255,255,0.05); border-radius: 50%; bottom: -100px; right: -50px; }
+        .auth-section { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: var(--dark); position: relative; overflow: hidden; }
         .auth-section.hidden { display: none !important; }
-        
-        .auth-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 48px 40px; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); width: 100%; max-width: 440px; position: relative; z-index: 10; animation: fadeIn 0.5s ease; }
+        .auth-card { background: var(--surface); padding: 48px 40px; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); width: 100%; max-width: 440px; position: relative; z-index: 10; animation: fadeIn 0.5s ease; border: 1px solid var(--border-color); }
         .auth-card h2 { color: var(--text-dark); margin-bottom: 8px; text-align: center; font-weight: 800; font-size: 26px; }
         .auth-card p.subtitle { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
-        
         .form-group { margin-bottom: 20px; position: relative; }
         .form-group label { color: var(--text-dark); font-weight: 600; margin-bottom: 8px; display: block; font-size: 13px; }
         .form-group i.icon { position: absolute; top: 38px; left: 16px; color: var(--text-muted); font-size: 14px; }
-        .form-group input { width: 100%; padding: 12px 16px 12px 42px; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 14px; transition: all 0.2s; background: #F9FAFB; }
-        .form-group input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(10,88,202,0.1); background: var(--surface); }
-        
+        .form-group input { width: 100%; padding: 12px 16px 12px 42px; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 14px; transition: all 0.2s; background: var(--bg-color); color: var(--text-dark); }
+        .form-group input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
         .auth-card button.btn-main { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.2s; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .auth-card button.btn-main:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(10,88,202,0.3); }
+        .auth-card button.btn-main:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-2px); }
         .auth-card button:disabled { opacity: 0.7; cursor: not-allowed; }
-        
         .auth-card .toggle-link { text-align: center; margin-top: 24px; color: var(--text-muted); font-size: 14px; }
-        .auth-card .toggle-link a { color: var(--primary); cursor: pointer; text-decoration: none; font-weight: 600; transition: color 0.2s; }
-        .auth-card .toggle-link a:hover { color: var(--primary-hover); text-decoration: underline; }
+        .auth-card .toggle-link a { color: var(--primary); cursor: pointer; text-decoration: none; font-weight: 600; }
         .forgot-pass-link { display: block; text-align: right; margin-top: -12px; margin-bottom: 20px; font-size: 13px; color: var(--primary); cursor: pointer; font-weight: 600; }
-        .forgot-pass-link:hover { text-decoration: underline; }
 
         /* --- DASHBOARD EKRANI --- */
         .dashboard-section { display: none; padding-bottom: 100px; }
         .dashboard-section.active { display: block; animation: fadeIn 0.4s ease; }
         
-        .header { background: var(--surface); padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
-        .logo { font-size: 24px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
-        .logo small { color: var(--text-muted); font-weight: 500; font-size: 13px; letter-spacing: normal; background: var(--bg-color); padding: 4px 10px; border-radius: 50px; }
+        .header { background: var(--surface); padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--primary); }
+        .logo small { color: var(--text-muted); font-weight: 500; font-size: 13px; background: var(--bg-color); padding: 4px 10px; border-radius: 50px; border: 1px solid var(--border-color); }
         
         .header-actions { display: flex; gap: 20px; align-items: center; }
         .user-pill { background: var(--bg-color); padding: 8px 18px; border-radius: 50px; display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 500; border: 1px solid var(--border-color); }
-        .btn-logout { background: transparent; border: 1.5px solid var(--border-color); color: var(--text-dark); font-weight: 600; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-size: 13px; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
-        .btn-logout:hover { background: var(--danger-bg); color: var(--danger-text); border-color: #FECACA; }
+        .btn-logout { background: transparent; border: 1px solid var(--border-color); color: var(--text-dark); font-weight: 600; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-size: 13px; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .btn-logout:hover { background: var(--danger-bg); color: var(--danger-text); border-color: var(--danger-text); }
 
-        .content-container { padding: 32px 40px; max-width: 1500px; margin: 0 auto; }
+        .content-container { padding: 32px 40px; max-width: 1600px; margin: 0 auto; }
 
-        /* Global Kontrol Butonları */
-        .control-panel { background: var(--surface); padding: 24px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border-color); margin-bottom: 24px; }
-        .panel-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 700; margin-bottom: 16px; }
-        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .control-panel { background: var(--surface); padding: 20px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .panel-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 700; margin-bottom: 0; }
+        .btn-g { padding: 10px 18px; border: none; font-weight: 600; cursor: pointer; border-radius: 8px; font-size: 13px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: white; }
+        .btn-global-start { background: var(--success-text); color: #fff; }
+        .btn-global-start:hover { background: #059669; }
+        .btn-global-stop { background: var(--danger-text); color: #fff; }
+        .btn-global-stop:hover { background: #DC2626; }
+        .btn-page-action { background: var(--surface-hover); color: var(--text-dark); border: 1px solid var(--border-color); }
+        .btn-page-action:hover { background: var(--border-color); }
+
+        /* --- GRID TASARIMI --- */
+        .device-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px; }
         
-        .btn-g { padding: 14px; border: none; font-weight: 700; cursor: pointer; border-radius: 10px; font-size: 13px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; color: white; }
-        .btn-start-all { background: var(--primary); }
-        .btn-start-all:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(10,88,202,0.3); }
-        .btn-stop-all { background: var(--danger-text); }
-        .btn-stop-all:hover:not(:disabled) { background: #B91C1C; transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(220,38,38,0.3); }
-        .btn-global-start { background: #0369A1; }
-        .btn-global-start:hover:not(:disabled) { background: #075985; transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(3,105,161,0.3); }
-        .btn-global-stop { background: #9F1239; }
-        .btn-global-stop:hover:not(:disabled) { background: #881337; transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(159,18,57,0.3); }
-        .btn-unplug-all { background: var(--warning-text); }
-        .btn-unplug-all:hover:not(:disabled) { background: #B45309; transform: translateY(-2px); }
-        .btn-plugin-all { background: var(--success-text); }
-        .btn-plugin-all:hover:not(:disabled) { background: #047857; transform: translateY(-2px); }
-        .btn-g:disabled { opacity: 0.5; cursor: not-allowed; background: var(--border-color) !important; color: var(--text-muted) !important; transform: none !important; box-shadow: none !important; }
+        .device-card { background: var(--surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 350px; }
+        .device-card:hover { border-color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.3); background: var(--surface-hover); }
+        
+        .card-header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .card-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--bg-color); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary); border: 1px solid var(--border-color); }
+        .card-icon.ac { color: var(--info-text); }
+        .card-icon.dc { color: var(--warning-text); }
+        .card-status { padding: 6px 12px; border-radius: 50px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; }
+        
+        .card-id { font-family: monospace; font-size: 14px; color: var(--text-dark); font-weight: 600; margin-bottom: 2px; }
+        .card-type { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-bottom: 16px; }
+        .card-kwh { font-size: 28px; font-weight: 800; color: var(--text-dark); display: flex; align-items: baseline; gap: 4px; flex-grow: 1; }
+        .card-kwh span { font-size: 13px; color: var(--text-muted); font-weight: 500; }
 
-        /* --- TABLO TASARIMI --- */
-        .table-wrapper { background: var(--surface); border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border-color); margin-bottom: 24px; position: relative; z-index: 10; }
-        table { width: 100%; border-collapse: collapse; text-align: center; }
-        th { background: #F9FAFB; padding: 18px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700; border-bottom: 2px solid var(--border-color); }
-        td { padding: 18px; border-bottom: 1px solid var(--border-color); vertical-align: middle; color: var(--text-dark); font-size: 14px; font-weight: 500; }
-        tr:hover td { background-color: #F9FAFB; }
-        tr:last-child td { border-bottom: none; }
+        /* Dinamik Şarj / SoC Gösterge Alanı */
+        .visual-area { height: 40px; margin-bottom: 20px; display: flex; align-items: center; }
+        .ac-charging { color: var(--success-text); font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 10px; animation: pulseText 1.5s infinite; }
+        .dc-soc-container { width: 100%; }
+        .soc-header { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
+        .soc-bar { width: 100%; height: 8px; background: var(--bg-color); border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); }
+        .soc-fill { height: 100%; background: var(--success-text); border-radius: 10px; transition: width 0.5s; }
 
-        /* Statü Badgeleri */
-        .st { padding: 6px 14px; border-radius: 50px; font-weight: 700; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; min-width: 110px; letter-spacing: 0.5px; }
-        .st i { margin-right: 6px; font-size: 10px; }
-        .available { background: var(--success-bg); color: var(--success-text); }
-        .preparing { background: var(--warning-bg); color: var(--warning-text); }
-        .off { background: var(--bg-color); color: var(--text-muted); border: 1px solid var(--border-color); }
-        .emergency-stop { background: var(--danger-bg); color: var(--danger-text); border: 1px solid #FECACA; animation: pulseRed 2s infinite; }
+        @keyframes pulseText { 0% { opacity: 0.6; } 50% { opacity: 1; text-shadow: 0 0 10px rgba(16, 185, 129, 0.5); } 100% { opacity: 0.6; } }
 
-        @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
+        /* Statü Renkleri */
+        .st-available { background: var(--success-bg); color: var(--success-text); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .st-preparing { background: var(--warning-bg); color: var(--warning-text); border: 1px solid rgba(245, 158, 11, 0.2); }
+        .st-charging { background: rgba(59, 130, 246, 0.1); color: var(--info-text); border: 1px solid rgba(59, 130, 246, 0.3); }
+        .st-off { background: var(--bg-color); color: var(--text-muted); border: 1px solid var(--border-color); }
+        .st-emergency { background: var(--danger-bg); color: var(--danger-text); border: 1px solid rgba(239, 68, 68, 0.4); animation: pulseRed 2s infinite; }
+        
+        @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
 
-        /* Tablo Aksiyon Butonları */
-        .action-group { display: flex; gap: 8px; justify-content: center; }
-        button.action { cursor: pointer; border: 1px solid var(--border-color); background: var(--surface); padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; transition: all 0.2s; }
-        button.action.start { color: var(--primary); border-color: #BFDBFE; background: var(--info-bg); }
-        button.action.start:hover:not(:disabled) { background: var(--primary); color: white; }
-        button.action.stop { color: var(--danger-text); border-color: #FECACA; background: var(--danger-bg); }
-        button.action.stop:hover:not(:disabled) { background: var(--danger-text); color: white; }
-        button.action.unplug { color: var(--warning-text); border-color: #FDE68A; background: var(--warning-bg); }
-        button.action.unplug:hover:not(:disabled) { background: var(--warning-text); color: white; }
-        button.action.plugin { color: var(--success-text); border-color: #A7F3D0; background: var(--success-bg); }
-        button.action.plugin:hover:not(:disabled) { background: var(--success-text); color: white; }
-        button.action:disabled { opacity: 0.5; cursor: not-allowed; background: var(--bg-color) !important; color: #9CA3AF !important; border-color: var(--border-color) !important; }
+        /* Kart İçi Aksiyon Butonları */
+        .card-actions { display: flex; gap: 8px; margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 16px; }
+        .c-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition: 0.2s; color: white; }
+        .c-btn-start { background: var(--success-text); }
+        .c-btn-start:hover:not(:disabled) { background: #059669; }
+        .c-btn-stop { background: var(--danger-text); }
+        .c-btn-stop:hover:not(:disabled) { background: #DC2626; }
+        .c-btn-plug { background: var(--surface-hover); color: var(--text-dark); border: 1px solid var(--border-color); }
+        .c-btn-plug:hover:not(:disabled) { background: var(--border-color); }
+        .c-btn-emg { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--danger-text); flex: 0 0 45px; }
+        .c-btn-emg:hover:not(:disabled) { background: var(--danger-bg); border-color: var(--danger-text); }
+        .c-btn-emg.active { background: var(--danger-text); color: white; }
+        .c-btn:disabled { opacity: 0.5; cursor: not-allowed; background: var(--bg-color) !important; color: var(--text-muted) !important; border-color: var(--border-color) !important; }
 
-        .emg-wrapper { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; padding: 6px 12px; border-radius: 8px; transition: background 0.2s; }
-        .emg-wrapper:hover { background: #F9FAFB; }
-        .emg-wrapper input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--danger-text); cursor: pointer; }
+        /* --- DETAYLI YAN PANEL (SIDEBAR) --- */
+        .panel-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1040; opacity: 0; transition: opacity 0.3s; }
+        .panel-overlay.active { display: block; opacity: 1; }
+        
+        .side-panel { position: fixed; top: 0; right: -450px; width: 450px; height: 100vh; background: var(--surface); z-index: 1050; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; border-left: 1px solid var(--border-color); }
+        .side-panel.open { right: 0; }
+        
+        .sp-header { padding: 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--bg-color); }
+        .sp-title { font-size: 16px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 10px; font-family: monospace; }
+        .sp-close { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; transition: color 0.2s; }
+        .sp-close:hover { color: var(--danger-text); }
+        
+        .sp-body { padding: 24px; overflow-y: auto; flex-grow: 1; }
+        .sp-section { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .sp-section-title { font-size: 12px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 16px; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;}
+        
+        .sp-data-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border-color); }
+        .sp-data-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .sp-label { color: var(--text-muted); font-size: 13px; font-weight: 500; }
+        .sp-value { color: var(--text-dark); font-size: 14px; font-weight: 700; font-family: monospace;}
+        
+        .meter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        .meter-box { background: var(--surface); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); text-align: center; }
+        .meter-box span { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
+        .meter-box strong { font-size: 18px; color: var(--info-text); font-weight: 800; font-family: monospace; }
 
-        /* QR ID Konteyner */
-        .id-container { position: relative; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-dark); cursor: pointer; font-family: monospace; font-size: 14px; background: var(--bg-color); padding: 6px 12px; border-radius: 8px; border: 1px dashed var(--border-color); transition: all 0.2s; z-index: 20; }
-        .id-container i { color: var(--primary); }
-        .id-container:hover { background: var(--info-bg); border-color: var(--primary); color: var(--primary); z-index: 50; }
-        .qr-popup { visibility: hidden; opacity: 0; position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--surface); padding: 12px; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid var(--border-color); pointer-events: none; }
-        .qr-popup img { width: 120px; height: 120px; display: block; border-radius: 8px; }
-        .id-container:hover .qr-popup { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
+        /* Panel İçi Kontrol Butonları */
+        .sp-action-btn { width: 100%; padding: 14px; border-radius: 10px; border: none; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; color: white; }
+        .sp-btn-start { background: var(--success-text); }
+        .sp-btn-start:hover:not(:disabled) { background: #059669; }
+        .sp-btn-stop { background: var(--danger-text); }
+        .sp-btn-stop:hover:not(:disabled) { background: #DC2626; }
+        .sp-btn-plug { background: var(--surface-hover); color: var(--text-dark); border: 1px solid var(--border-color); }
+        .sp-btn-plug:hover:not(:disabled) { background: var(--border-color); }
+        .sp-action-btn:disabled { opacity: 0.5; cursor: not-allowed; background: var(--border-color) !important; color: var(--text-muted) !important; }
+
+        /* Acil Durum Toggle */
+        .toggle-wrapper { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; }
+        .toggle-wrapper span { font-weight: 600; color: var(--danger-text); display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--danger-text); }
+        input:checked + .slider:before { transform: translateX(24px); }
+        input:disabled + .slider { opacity: 0.5; cursor: not-allowed; }
 
         /* Sayfalama */
         .pagination-wrapper { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; }
-        .page-btn { padding: 8px 16px; border: 1px solid var(--border-color); background: var(--surface); border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text-muted); transition: all 0.2s; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
-        .page-btn:hover:not(.active) { background: var(--bg-color); color: var(--text-dark); }
-        .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 6px -1px rgba(10,88,202,0.2); }
+        .page-btn { padding: 8px 16px; border: 1px solid var(--border-color); background: var(--surface); border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text-muted); transition: all 0.2s; }
+        .page-btn:hover:not(.active) { background: var(--surface-hover); color: var(--text-dark); }
+        .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Footer Glassmorphism */
-        .footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); color: var(--text-dark); padding: 16px 40px; border-radius: 50px; font-size: 14px; font-weight: 600; display: flex; gap: 40px; z-index: 1000; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4); }
+        /* Footer */
+        .footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(16px); color: var(--text-dark); padding: 16px 40px; border-radius: 50px; font-size: 14px; font-weight: 600; display: flex; gap: 40px; z-index: 100; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         .footer span { display: flex; align-items: center; gap: 8px; }
-        .footer span i.fa-spinner { color: var(--warning-text); }
+        .footer span i.fa-bolt { color: var(--info-text); }
         .footer span i.fa-check-circle { color: var(--success-text); }
-        .footer span b { color: var(--text-dark); font-size: 16px; background: var(--bg-color); padding: 2px 10px; border-radius: 12px; }
+        .footer span b { color: var(--text-dark); font-size: 16px; background: var(--bg-color); padding: 2px 10px; border-radius: 12px; border: 1px solid var(--border-color); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -176,7 +215,6 @@
 
 <div id="authSection" class="auth-section">
     <div class="auth-card">
-        
         <div id="loginForm">
             <h2>Giriş Yap</h2>
             <p class="subtitle">Yönetim paneline erişmek için giriş yapın.</p>
@@ -219,9 +257,7 @@
                 <label>Şifre Oluşturun</label>
                 <i class="fa-solid fa-key icon"></i>
                 <input type="password" id="signupPassword" placeholder="••••••••">
-                <small style="color: var(--text-muted); display: block; margin-top: 6px; font-size:11px; line-height: 1.4;">
-                    Min. 8 karakter, 1 büyük harf, 1 küçük harf ve 1 rakam.
-                </small>
+                <small style="color: var(--text-muted); display: block; margin-top: 6px; font-size:11px;">Min. 8 karakter, 1 büyük harf, 1 küçük harf ve 1 rakam.</small>
             </div>
             <button class="btn-main" id="btnSignup" onclick="appAuth.signup()">
                 <span>Kaydol</span> <i class="fa-solid fa-user-plus"></i>
@@ -237,16 +273,13 @@
                 <i class="fa-solid fa-envelope icon"></i>
                 <input type="email" id="forgotEmail" placeholder="ornek@sirket.com">
             </div>
-            
             <button class="btn-main" id="btnSendResetLink" onclick="appAuth.sendResetLink()">
                 <span>Sıfırlama Linki Gönder</span> <i class="fa-solid fa-paper-plane"></i>
             </button>
-
             <div id="resendBlock" style="display: none; text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-muted);">
                 E-posta ulaşmadı mı? <br>
                 <a id="resendLink" style="color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 5px;" onclick="appAuth.sendResetLink(true)">Yeniden Gönder</a>
             </div>
-
             <div class="toggle-link" style="margin-top: 24px;"><a onclick="appUI.switchAuthForm('login')"><i class="fa-solid fa-arrow-left"></i> Giriş Ekranına Dön</a></div>
         </div>
 
@@ -257,16 +290,12 @@
                 <label>Yeni Şifre</label>
                 <i class="fa-solid fa-lock icon"></i>
                 <input type="password" id="resetNewPassword" placeholder="Yeni şifreniz">
-                <small style="color: var(--text-muted); display: block; margin-top: 6px; font-size:11px; line-height: 1.4;">
-                    Min. 8 karakter, 1 büyük harf, 1 küçük harf ve 1 rakam.
-                </small>
             </div>
             <button class="btn-main" id="btnSaveNewPassword" onclick="appAuth.saveNewPassword()" style="background: var(--success-text);">
                 <span>Şifremi Kaydet</span> <i class="fa-solid fa-check"></i>
             </button>
             <div class="toggle-link" style="margin-top: 15px;"><a href="?">İptal ve Ana Ekrana Dön</a></div>
         </div>
-        
     </div>
 </div>
 
@@ -275,11 +304,9 @@
         <div class="logo"><i class="fa-solid fa-charging-station"></i> Beko <small>WAT Mobility</small></div>
         <div class="header-actions">
             <div class="user-pill">
-                <i class="fa-regular fa-clock text-muted"></i>
-                <span id="live-clock"></span>
+                <i class="fa-regular fa-clock text-muted"></i> <span id="live-clock"></span>
                 <span style="color: var(--border-color);">|</span>
-                <i class="fa-regular fa-circle-user text-muted"></i>
-                <span id="userEmail" style="color: var(--primary);"></span>
+                <i class="fa-regular fa-circle-user text-muted"></i> <span id="userEmail" style="color: var(--text-dark);"></span>
             </div>
             <button class="btn-logout" onclick="appAuth.logout()">
                 <i class="fa-solid fa-power-off"></i> Çıkış Yap
@@ -288,47 +315,39 @@
     </div>
 
     <div class="content-container">
-        
-        <div class="control-panel" style="background: #F8FAFC; padding: 12px 24px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-            <div class="panel-title" style="margin-bottom: 0;"><i class="fa-solid fa-earth-americas"></i> Global Kontroller (Tüm Cihazlar)</div>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <button class="btn-g btn-global-start" style="padding: 8px 16px; font-size: 12px;" onclick="appCore.globalControl('START')"><i class="fa-solid fa-bolt"></i> TÜMÜNÜ BAŞLAT</button>
-                <button class="btn-g btn-global-stop" style="padding: 8px 16px; font-size: 12px;" onclick="appCore.globalControl('STOP')"><i class="fa-solid fa-power-off"></i> TÜMÜNÜ DURDUR</button>
-            </div>
-        </div>
-
         <div class="control-panel">
-            <div class="panel-title">Mevcut Sayfa Kontrolleri</div>
-            <div class="btn-grid">
-                <button class="btn-g btn-start-all" onclick="appCore.pageControl('START')"><i class="fa-solid fa-play"></i> Sayfayı Başlat</button>
-                <button class="btn-g btn-stop-all" onclick="appCore.pageControl('STOP')"><i class="fa-solid fa-stop"></i> Sayfayı Durdur</button>
-                <button id="togglePlugBtn" class="btn-g btn-unplug-all" data-mode="unplug" onclick="appCore.handleTogglePlug()"><i class="fa-solid fa-plug-circle-xmark"></i> Sayfayı Çıkar</button>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <h3 class="panel-title"><i class="fa-solid fa-earth-americas"></i> İstasyon Kontrol</h3>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="btn-g btn-page-action" onclick="appCore.pageControl('START')"><i class="fa-solid fa-play"></i> Sayfayı Başlat</button>
+                <button class="btn-g btn-page-action" onclick="appCore.pageControl('STOP')"><i class="fa-solid fa-stop"></i> Sayfayı Durdur</button>
+                <span style="border-left: 1px solid var(--border-color); margin: 0 5px;"></span>
+                <button class="btn-g btn-global-start" onclick="appCore.globalControl('START')"><i class="fa-solid fa-bolt"></i> Tümünü Başlat</button>
+                <button class="btn-g btn-global-stop" onclick="appCore.globalControl('STOP')"><i class="fa-solid fa-power-off"></i> Tümünü Durdur</button>
             </div>
         </div>
 
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Cihaz ID</th>
-                        <th>Güç Kontrolü</th>
-                        <th>Statü</th>
-                        <th>Tüketim (kWh)</th>
-                        <th>Acil Durum</th>
-                        <th>Kablo Kontrol</th>
-                    </tr>
-                </thead>
-                <tbody id="deviceTable"></tbody>
-            </table>
-        </div>
+        <div id="deviceGrid" class="device-grid">
+            </div>
         
         <div id="paginationControls" class="pagination-wrapper"></div>
     </div>
 
     <div class="footer">
-        <span><i class="fa-solid fa-spinner fa-spin"></i> Hazırlanıyor: <b id="count-prep">0</b></span>
+        <span><i class="fa-solid fa-bolt"></i> Aktif Şarj: <b id="count-charging">0</b></span>
         <span><i class="fa-solid fa-check-circle"></i> Kullanıma Hazır: <b id="count-avail">0</b></span>
     </div>
+</div>
+
+<div id="panelOverlay" class="panel-overlay" onclick="appCore.closeDetailedPanel()"></div>
+<div id="devicePanel" class="side-panel">
+    <div class="sp-header">
+        <div class="sp-title"><i class="fa-solid fa-microchip" style="color: var(--primary);"></i> <span id="spDeviceId">Cihaz ID</span></div>
+        <button class="sp-close" onclick="appCore.closeDetailedPanel()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="sp-body" id="spBodyContent">
+        </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -347,13 +366,13 @@
 
     let app, db;
     let state = [];
-    const timers = {};
+    const timers = {}; // Zamanlayıcıları tutacak obje
     let unsubscribeSnapshot = null;
     let validatedResetEmail = ""; 
     let currentPage = 1;
     const itemsPerPage = 10;
-    
-    let resendTimerInterval = null; // Yeniden Gönder Sayacı için global değişken
+    let resendTimerInterval = null; 
+    let activePanelDeviceId = null;
 
     const deviceIds = [
         "XYM221003D1W1C2413A001A0", "XYM221003D1W1C2413A002A0", "XYM221003D1W1C2413A003A0",
@@ -368,258 +387,93 @@
         "XYM221003D1W1C2413A028A0", "XYM221003D1W1C2413A029A0", "XYM221003D1W1C2413A030A0"
     ];
 
-    // --- UTILS (Yardımcı Fonksiyonlar) ---
     const utils = {
         validateEmail: (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(email),
         validatePassword: (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password),
         setLoading: (btnId, isLoading, originalText) => {
             const btn = document.getElementById(btnId);
-            if(isLoading) {
-                btn.disabled = true;
-                btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> İşleniyor...`;
-            } else {
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-            }
+            if(isLoading) { btn.disabled = true; btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> İşleniyor...`; } 
+            else { btn.disabled = false; btn.innerHTML = originalText; }
         }
     };
 
-    // --- UI (Arayüz Yöneticisi) ---
     const appUI = {
         showToast: (msg, type = 'success') => {
             const box = document.getElementById('toastBox');
             const toast = document.createElement('div');
             toast.className = `toast-msg ${type}`;
-            
-            let icon = 'fa-circle-check';
-            if(type === 'error') icon = 'fa-circle-exclamation';
-            if(type === 'info') icon = 'fa-circle-info';
-            if(type === 'warning') icon = 'fa-triangle-exclamation';
-
+            let icon = type === 'error' ? 'fa-circle-exclamation' : (type === 'info' ? 'fa-circle-info' : 'fa-circle-check');
             toast.innerHTML = `<i class="fa-solid ${icon} fa-lg"></i> <div>${msg}</div>`;
             box.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.4s forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
+            setTimeout(() => { toast.style.animation = 'slideOut 0.4s forwards'; setTimeout(() => toast.remove(), 400); }, 3000);
         },
-        
-        clearAllInputs: () => {
-            document.querySelectorAll('input').forEach(input => {
-                if(input.type !== 'checkbox') input.value = '';
-            });
-        },
-
+        clearAllInputs: () => { document.querySelectorAll('input').forEach(input => { if(input.type !== 'checkbox') input.value = ''; }); },
         switchAuthForm: (formId) => {
             document.getElementById('loginForm').style.display = formId === 'login' ? 'block' : 'none';
             document.getElementById('signupForm').style.display = formId === 'signup' ? 'block' : 'none';
             document.getElementById('forgotForm').style.display = formId === 'forgot' ? 'block' : 'none';
             document.getElementById('resetPasswordForm').style.display = formId === 'reset' ? 'block' : 'none';
-            
-            // Yeniden gönder UI sıfırlama
-            if(resendTimerInterval) clearInterval(resendTimerInterval);
-            document.getElementById('btnSendResetLink').style.display = 'flex';
-            document.getElementById('resendBlock').style.display = 'none';
-            document.getElementById('resendLink').style.pointerEvents = 'auto';
-            document.getElementById('resendLink').style.color = 'var(--primary)';
-            document.getElementById('resendLink').style.textDecoration = 'none';
-            document.getElementById('resendLink').innerText = 'Yeniden Gönder';
-
             appUI.clearAllInputs();
         },
-
-        updateClock: () => {
-            document.getElementById('live-clock').innerText = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute:'2-digit', second:'2-digit' });
-        }
+        updateClock: () => { document.getElementById('live-clock').innerText = new Date().toLocaleTimeString('tr-TR'); }
     };
 
-    // --- AUTH (Giriş/Çıkış Yöneticisi) ---
     const appAuth = {
-        login: async () => {
+        login: async () => { 
             const email = document.getElementById('loginEmail').value.trim();
             const username = document.getElementById('loginUsername').value.trim();
             const pass = document.getElementById('loginPassword').value;
-
             if (!email || !username || !pass) return appUI.showToast("Lütfen tüm alanları doldurun.", "warning");
-            if (!utils.validateEmail(email)) return appUI.showToast("Geçerli bir e-posta giriniz.", "warning");
-
             utils.setLoading('btnLogin', true, '<span>Giriş Yap</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>');
-
             try {
                 const docSnap = await db.collection('users').doc(email).get();
-                if (docSnap.exists) {
-                    if (docSnap.data().username === username && docSnap.data().password === pass) {
-                        appAuth.setSession(email, username);
-                        appUI.showToast("Giriş Başarılı!", "success");
-                    } else {
-                        appUI.showToast("Hatalı kullanıcı adı veya şifre.", "error");
-                        appUI.clearAllInputs();
-                    }
+                if (docSnap.exists && docSnap.data().username === username && docSnap.data().password === pass) {
+                    appAuth.setSession(email, username);
+                    appUI.showToast("Giriş Başarılı!", "success");
                 } else {
-                    appUI.showToast("Bu e-posta sisteme kayıtlı değil.", "error");
+                    appUI.showToast("Hatalı kullanıcı adı veya şifre.", "error");
                     appUI.clearAllInputs();
                 }
-            } catch (e) { 
-                appUI.showToast("Sunucu hatası oluştu.", "error"); 
-            }
+            } catch (e) { appUI.showToast("Sunucu hatası.", "error"); }
             utils.setLoading('btnLogin', false, '<span>Giriş Yap</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>');
         },
-
-        signup: async () => {
+        signup: async () => { 
             const email = document.getElementById('signupEmail').value.trim();
             const username = document.getElementById('signupUsername').value.trim();
             const pass = document.getElementById('signupPassword').value;
-
-            if (!email || !username || !pass) return appUI.showToast("Tüm alanları doldurmalısınız.", "warning");
-            if (!utils.validateEmail(email)) return appUI.showToast("Geçersiz e-posta formatı.", "warning");
-            if (!utils.validatePassword(pass)) return appUI.showToast("Şifreniz kurallara uymuyor.", "warning");
-
+            if (!email || !username || !pass) return appUI.showToast("Tüm alanları doldurun.", "warning");
             utils.setLoading('btnSignup', true, '<span>Kaydol</span> <i class="fa-solid fa-user-plus"></i>');
-
             try {
                 const docSnap = await db.collection('users').doc(email).get();
-                if (docSnap.exists) {
-                    appUI.showToast("Bu e-posta zaten kullanımda.", "error");
-                } else {
-                    const userQuery = await db.collection('users').where('username', '==', username).get();
-                    if (!userQuery.empty) {
-                        appUI.showToast("Kullanıcı adı başkası tarafından alınmış.", "warning");
-                    } else {
-                        await db.collection('users').doc(email).set({ username: username, password: pass });
-                        appUI.showToast("Kayıt başarılı! Yönlendiriliyorsunuz...", "success");
-                        appAuth.setSession(email, username);
-                    }
-                }
-            } catch (e) { appUI.showToast("Maalesef kayıt işlemi başarısız oldu.", "error"); }
+                if (!docSnap.exists) {
+                    await db.collection('users').doc(email).set({ username: username, password: pass });
+                    appAuth.setSession(email, username);
+                } else appUI.showToast("E-posta kullanımda.", "error");
+            } catch (e) {}
             utils.setLoading('btnSignup', false, '<span>Kaydol</span> <i class="fa-solid fa-user-plus"></i>');
         },
-
-        // Şifre sıfırlama maili gönderme (İlk kez veya yeniden)
-        sendResetLink: async (isResend = false) => {
-            const email = document.getElementById('forgotEmail').value.trim();
-            if (!utils.validateEmail(email)) return appUI.showToast("Lütfen geçerli bir e-posta girin.", "warning");
-
-            if (!isResend) utils.setLoading('btnSendResetLink', true, '<span>Gönderiliyor...</span>');
-            else {
-                document.getElementById('resendLink').innerText = 'Gönderiliyor...';
-                document.getElementById('resendLink').style.pointerEvents = 'none';
-            }
-
-            try {
-                const docSnap = await db.collection('users').doc(email).get();
-                if (docSnap.exists) {
-                    const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                    await db.collection('users').doc(email).update({ resetToken: token });
-
-                    const resetUrl = window.location.origin + window.location.pathname + "?token=" + token + "&email=" + encodeURIComponent(email);
-                    const tplParams = { name: docSnap.data().username, user_email: email, reset_link: resetUrl, time: new Date().toLocaleString('tr-TR') };
-
-                    await emailjs.send('service_qgaubfd', 'template_iax6959', tplParams);
-                    appUI.showToast(isResend ? "Yeni bağlantı gönderildi." : "Sıfırlama bağlantısı e-postanıza gönderildi.", "success");
-                    
-                    // Ana butonu gizle, yeniden gönder butonunu ve sayacı başlat
-                    document.getElementById('btnSendResetLink').style.display = 'none';
-                    document.getElementById('resendBlock').style.display = 'block';
-                    appAuth.startResendTimer();
-                } else {
-                    appUI.showToast("Sistemde böyle bir kullanıcı bulunamadı.", "error");
-                    if (!isResend) utils.setLoading('btnSendResetLink', false, '<span>Sıfırlama Linki Gönder</span> <i class="fa-solid fa-paper-plane"></i>');
-                    else {
-                        document.getElementById('resendLink').innerText = 'Yeniden Gönder';
-                        document.getElementById('resendLink').style.pointerEvents = 'auto';
-                    }
-                }
-            } catch(e) { 
-                appUI.showToast("Mail gönderilirken hata oluştu.", "error"); 
-                if (!isResend) utils.setLoading('btnSendResetLink', false, '<span>Sıfırlama Linki Gönder</span> <i class="fa-solid fa-paper-plane"></i>');
-                else {
-                    document.getElementById('resendLink').innerText = 'Yeniden Gönder';
-                    document.getElementById('resendLink').style.pointerEvents = 'auto';
-                }
-            }
-        },
-
-        // Yeniden gönder butonunun sayacı
-        startResendTimer: () => {
-            if (resendTimerInterval) clearInterval(resendTimerInterval);
-            let timeLeft = 60; // 60 Saniye kısıtlama
-            const link = document.getElementById('resendLink');
-            
-            link.style.pointerEvents = 'none';
-            link.style.color = 'var(--text-muted)';
-            link.style.textDecoration = 'none';
-            link.innerText = `Yeniden Gönder (${timeLeft}s)`;
-
-            resendTimerInterval = setInterval(() => {
-                timeLeft--;
-                link.innerText = `Yeniden Gönder (${timeLeft}s)`;
-                if (timeLeft <= 0) {
-                    clearInterval(resendTimerInterval);
-                    link.style.pointerEvents = 'auto';
-                    link.style.color = 'var(--primary)';
-                    link.style.textDecoration = 'underline';
-                    link.innerText = 'Yeniden Gönder';
-                }
-            }, 1000);
-        },
-
-        verifyResetToken: async (email, token) => {
-            document.getElementById('authSection').classList.remove('hidden');
-            appUI.switchAuthForm('reset');
-            try {
-                const docSnap = await db.collection('users').doc(email).get();
-                if (docSnap.exists && docSnap.data().resetToken === token) {
-                    validatedResetEmail = email;
-                    document.getElementById('resetSubtitle').innerText = `${email} için yeni şifrenizi belirleyin.`;
-                } else {
-                    appUI.showToast("Bağlantı geçersiz veya süresi dolmuş.", "error");
-                    document.getElementById('btnSaveNewPassword').disabled = true;
-                }
-            } catch(e) { appUI.showToast("Doğrulama hatası.", "error"); }
-        },
-
-        saveNewPassword: async () => {
-            const pass = document.getElementById('resetNewPassword').value;
-            if (!utils.validatePassword(pass)) return appUI.showToast("Şifreniz kurallara uymuyor.", "warning");
-
-            utils.setLoading('btnSaveNewPassword', true, '<span>Kaydediliyor...</span>');
-            try {
-                await db.collection('users').doc(validatedResetEmail).update({
-                    password: pass, resetToken: firebase.firestore.FieldValue.delete()
-                });
-                appUI.showToast("Şifreniz güncellendi! Giriş yapabilirsiniz.", "success");
-                window.history.pushState({}, document.title, window.location.pathname);
-                setTimeout(() => appUI.switchAuthForm('login'), 2000);
-            } catch(e) { appUI.showToast("Güncelleme başarısız.", "error"); }
-            utils.setLoading('btnSaveNewPassword', false, '<span>Şifremi Kaydet</span> <i class="fa-solid fa-check"></i>');
-        },
-
+        sendResetLink: async (isResend = false) => { },
+        saveNewPassword: async () => { },
+        verifyResetToken: async (email, token) => { },
         setSession: (email, username) => {
             localStorage.setItem('watt_email', email);
             localStorage.setItem('watt_username', username);
-            if (window.location.search.includes('token=')) window.history.pushState({}, document.title, window.location.pathname);
             appAuth.checkState();
         },
-
         logout: () => {
             localStorage.removeItem('watt_email');
             localStorage.removeItem('watt_username');
             appUI.clearAllInputs();
-            appUI.showToast("Güvenli çıkış yapıldı.", "info");
+            appCore.closeDetailedPanel();
             appAuth.checkState();
         },
-
         checkState: () => {
             const authSec = document.getElementById('authSection');
             const dashSec = document.getElementById('dashboardSection');
-            const savedEmail = localStorage.getItem('watt_email');
-            const savedUsername = localStorage.getItem('watt_username');
-
-            if (savedEmail && savedUsername) {
+            if (localStorage.getItem('watt_email')) {
                 authSec.classList.add('hidden');
                 dashSec.classList.add('active');
-                document.getElementById('userEmail').innerText = savedUsername;
+                document.getElementById('userEmail').innerText = localStorage.getItem('watt_username');
                 appCore.initFirestoreListener();
             } else {
                 authSec.classList.remove('hidden');
@@ -630,7 +484,6 @@
         }
     };
 
-    // --- CORE (Cihaz/Dashboard Mantığı) ---
     const appCore = {
         initFirestoreListener: () => {
             if(!unsubscribeSnapshot) {
@@ -641,46 +494,60 @@
 
                     if (missingIds.length > 0) {
                         const batch = db.batch();
-                        missingIds.forEach(id => {
+                        missingIds.forEach((id, index) => {
                             batch.set(db.collection('devices').doc(id), { 
-                                id: id, status: 'Off', kwh: 0, emergency: false, plugged: true, lastUpdate: new Date()
+                                id: id, status: 'Off', kwh: 0, emergency: false, plugged: true,
+                                type: index % 2 === 0 ? 'DC' : 'AC', 
+                                lastBoot: new Date(Date.now() - Math.random() * 500000000).toISOString(),
+                                lastHeartbeat: new Date(Date.now() - Math.random() * 500000).toISOString()
                             }, { merge: true });
                         });
                         batch.commit();
                     }
                     
-                    state = deviceIds.map(id => data.find(x => x.id === id) || { id, status: 'Off', kwh: 0, emergency: false, plugged: true });
-                    appCore.renderTable();
+                    state = deviceIds.map(id => data.find(x => x.id === id) || { id, status: 'Off', kwh: 0, emergency: false, plugged: true, type: 'AC' });
+                    appCore.renderGrid();
+                    if(activePanelDeviceId) appCore.updateDetailedPanelUI();
                 });
             }
         },
 
         updateDevice: async (id, fields) => {
-            try { await db.collection('devices').doc(id).set({ ...fields, id: id, lastUpdate: new Date() }, { merge: true }); } 
+            try { await db.collection('devices').doc(id).set({ ...fields, id: id, lastHeartbeat: new Date().toISOString() }, { merge: true }); } 
             catch(e) { appUI.showToast("Cihaz güncellenemedi.", "error"); }
         },
 
+        // 5 Saniyelik Preparing -> Available geçişi
         clearTimers: (id) => { if (timers[id]) { clearTimeout(timers[id].prepare); delete timers[id]; } },
         startAutoFlow: (id) => {
             appCore.clearTimers(id);
             timers[id] = { prepare: setTimeout(async () => {
                 const dev = state.find(x => x.id === id);
-                if(dev && !dev.emergency && dev.status !== 'Off') {
-                    await appCore.updateDevice(id, { status: 'Preparing', plugged: true });
+                // Cihaz Preparing statüsündeyse 5 saniye sonra otomatik Available'a döner, Charging olmaz.
+                if(dev && !dev.emergency && dev.status === 'Preparing') {
+                    await appCore.updateDevice(id, { status: 'Available' });
                 }
             }, 5000)};
         },
 
         actions: {
-            start: async (id) => { await appCore.updateDevice(id, { status: 'Available', kwh: 0, emergency: false, plugged: false }); appCore.startAutoFlow(id); },
-            stop: async (id) => { appCore.clearTimers(id); await appCore.updateDevice(id, { status: 'Off', emergency: false, plugged: true }); },
+            start: async (id) => { 
+                await appCore.updateDevice(id, { status: 'Preparing', emergency: false, plugged: true }); 
+                appCore.startAutoFlow(id); // 5 Saniyelik zamanlayıcıyı başlatır
+            },
+            stop: async (id) => { 
+                appCore.clearTimers(id); // Zamanlayıcıyı iptal et
+                await appCore.updateDevice(id, { status: 'Off', emergency: false, plugged: true }); 
+            },
             toggleEmergency: async (id, isChecked) => {
                 appCore.clearTimers(id);
                 if (isChecked) await appCore.updateDevice(id, { emergency: true, status: 'Emergency Stop' });
                 else await appCore.updateDevice(id, { emergency: false, status: 'Off', kwh: 0 });
             },
-            unplug: async (id) => { appCore.clearTimers(id); await appCore.updateDevice(id, { status: 'Available', kwh: 0, emergency: false, plugged: false }); },
-            plugin: async (id) => { appCore.clearTimers(id); await appCore.updateDevice(id, { plugged: true, status: 'Preparing' }); }
+            togglePlug: async (id, isPlugged) => {
+                appCore.clearTimers(id);
+                await appCore.updateDevice(id, { plugged: isPlugged, status: isPlugged ? 'Available' : 'Off' });
+            }
         },
 
         pageControl: (type) => {
@@ -690,7 +557,7 @@
                 if (type === 'START' && s === 'off') appCore.actions.start(d.id);
                 if (type === 'STOP' && !d.emergency && s !== 'off') appCore.actions.stop(d.id);
             });
-            appUI.showToast(`Sayfa ${type === 'START' ? 'başlatıldı' : 'durduruldu'}.`, 'info');
+            appUI.showToast(`Sayfa ${type === 'START' ? 'hazırlık moduna alındı' : 'durduruldu'}.`, 'info');
         },
 
         globalControl: (type) => {
@@ -699,86 +566,185 @@
                 if (type === 'START' && s === 'off') appCore.actions.start(d.id);
                 if (type === 'STOP' && !d.emergency && s !== 'off') appCore.actions.stop(d.id);
             });
-            appUI.showToast(`Tüm cihazlar ${type === 'START' ? 'başlatıldı' : 'durduruldu'}!`, 'info');
+            appUI.showToast(`Tüm cihazlar ${type === 'START' ? 'hazırlık moduna alındı' : 'durduruldu'}!`, 'info');
         },
 
-        handleTogglePlug: () => {
-            const btn = document.getElementById('togglePlugBtn');
-            const mode = btn.getAttribute('data-mode');
+        changePage: (page) => { currentPage = page; appCore.renderGrid(); },
+
+        // KART GÖRÜNÜMÜ RENDER
+        renderGrid: () => {
             const visible = state.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
             
-            visible.forEach(d => {
-                if(!d.emergency && (d.status||"").toLowerCase() !== 'off') {
-                    if (mode === 'unplug' && d.plugged !== false) appCore.actions.unplug(d.id);
-                    if (mode === 'plugin' && (d.status||"").toLowerCase() === 'available' && d.plugged === false) appCore.actions.plugin(d.id);
-                }
-            });
-        },
-
-        changePage: (page) => { currentPage = page; appCore.renderTable(); },
-
-        renderTable: () => {
-            const visible = state.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-            let pCount = 0, uCount = 0;
-
-            document.getElementById('deviceTable').innerHTML = visible.map((d) => {
+            document.getElementById('deviceGrid').innerHTML = visible.map((d) => {
                 const st = (d.status || "Off").toLowerCase();
                 const isOff = st === 'off', isEmg = d.emergency === true, isPlugged = d.plugged !== false;
-                if (!isOff && !isEmg) isPlugged ? pCount++ : uCount++;
+                const type = d.type || 'AC';
+                
+                let badgeClass = 'st-off'; let icon = 'fa-power-off';
+                if(st === 'available') { badgeClass = 'st-available'; icon = 'fa-check'; }
+                if(st === 'preparing') { badgeClass = 'st-preparing'; icon = 'fa-spinner fa-spin'; }
+                if(st === 'charging') { badgeClass = 'st-charging'; icon = 'fa-bolt'; }
+                if(st === 'emergency stop') { badgeClass = 'st-emergency'; icon = 'fa-triangle-exclamation'; }
 
-                let badgeIcon = 'fa-power-off';
-                if(st === 'available') badgeIcon = 'fa-check';
-                if(st === 'preparing') badgeIcon = 'fa-spinner fa-spin';
-                if(st === 'emergency stop') badgeIcon = 'fa-triangle-exclamation';
+                let visualHtml = '';
+                if(st === 'charging') {
+                    if(type === 'DC') {
+                        const mockSoc = Math.floor(Math.random() * 60) + 20; 
+                        visualHtml = `
+                            <div class="dc-soc-container">
+                                <div class="soc-header"><span>Şarj Durumu (SoC)</span> <span>%${mockSoc}</span></div>
+                                <div class="soc-bar"><div class="soc-fill" style="width: ${mockSoc}%;"></div></div>
+                            </div>
+                        `;
+                    } else {
+                        visualHtml = `<div class="ac-charging"><i class="fa-solid fa-bolt fa-beat-fade"></i> Araç Şarj Oluyor...</div>`;
+                    }
+                } else if(st === 'preparing') {
+                    visualHtml = `<div class="ac-charging" style="color: var(--warning-text); animation: none;"><i class="fa-solid fa-hourglass-half"></i> Bağlantı Bekleniyor...</div>`;
+                }
 
                 return `
-                <tr>
-                    <td>
-                        <div class="id-container">
-                            <i class="fa-solid fa-microchip"></i> ${d.id}
-                            <div class="qr-popup"><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${d.id}" alt="QR Kod"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="action-group">
-                            <button class="action start" onclick="appCore.actions.start('${d.id}')" ${!isOff || isEmg ? 'disabled' : ''}><i class="fa-solid fa-play"></i> START</button>
-                            <button class="action stop" onclick="appCore.actions.stop('${d.id}')" ${isOff || isEmg ? 'disabled' : ''}><i class="fa-solid fa-stop"></i> STOP</button>
-                        </div>
-                    </td>
-                    <td><span class="st ${st === 'emergency stop' ? 'emergency-stop' : st.replace(' ', '-')}"><i class="fa-solid ${badgeIcon}"></i> ${d.status || 'Off'}</span></td>
-                    <td style="font-family:monospace; font-size:15px;"><b>${Number(d.kwh || 0).toFixed(3)}</b></td>
-                    <td>
-                        <label class="emg-wrapper">
-                            <input type="checkbox" ${(!isOff && isEmg) ? 'checked' : ''} ${isOff ? 'disabled' : ''} onchange="appCore.actions.toggleEmergency('${d.id}', this.checked)">
-                            EMG
-                        </label>
-                    </td>
-                    <td>
-                        <button class="action ${isPlugged ? 'unplug' : 'plugin'}" onclick="appCore.actions.${isPlugged ? 'unplug' : 'plugin'}('${d.id}')" ${isOff || isEmg ? 'disabled' : ''}>
-                            <i class="fa-solid ${isPlugged ? 'fa-plug-circle-xmark' : 'fa-plug-circle-check'}"></i> ${isPlugged ? 'UNPLUG' : 'PLUG IN'}
-                        </button>
-                    </td>
-                </tr>`;
-            }).join('');
+                <div class="device-card" onclick="appCore.openDetailedPanel('${d.id}')">
+                    <div class="card-header-top">
+                        <div class="card-icon ${type.toLowerCase()}">${type}</div>
+                        <div class="card-status ${badgeClass}"><i class="fa-solid ${icon}"></i> ${d.status || 'Off'}</div>
+                    </div>
+                    <div class="card-id">${d.id.substring(0, 18)}...</div>
+                    
+                    <div class="card-kwh">${Number(d.kwh || 0).toFixed(2)} <span>kWh</span></div>
+                    
+                    <div class="visual-area">${visualHtml}</div>
 
-            const btn = document.getElementById('togglePlugBtn');
-            if (btn) {
-                const isAllOff = visible.every(d => (d.status || '').toLowerCase() === 'off');
-                btn.disabled = isAllOff;
-                if (!isAllOff) {
-                    const isPlugMode = uCount > pCount;
-                    btn.setAttribute('data-mode', isPlugMode ? 'plugin' : 'unplug');
-                    btn.innerHTML = isPlugMode ? '<i class="fa-solid fa-plug-circle-check"></i> Sayfayı Tak' : '<i class="fa-solid fa-plug-circle-xmark"></i> Sayfayı Çıkar';
-                    btn.className = `btn-g ${isPlugMode ? 'btn-plugin-all' : 'btn-unplug-all'}`;
-                }
-            }
+                    <div class="card-actions" onclick="event.stopPropagation()">
+                        ${(isOff || st === 'available') ? 
+                            `<button class="c-btn c-btn-start" onclick="appCore.actions.start('${d.id}')" ${isEmg ? 'disabled':''}><i class="fa-solid fa-play"></i> Başlat</button>` :
+                            `<button class="c-btn c-btn-stop" onclick="appCore.actions.stop('${d.id}')" ${isEmg ? 'disabled':''}><i class="fa-solid fa-stop"></i> Durdur</button>`
+                        }
+                        
+                        <button class="c-btn c-btn-plug" onclick="appCore.actions.togglePlug('${d.id}', ${!isPlugged})" ${isEmg || st==='charging' ? 'disabled':''}>
+                            <i class="fa-solid ${isPlugged ? 'fa-plug-circle-xmark' : 'fa-plug-circle-check'}"></i> ${isPlugged ? 'Çıkar' : 'Tak'}
+                        </button>
+                        
+                        <button class="c-btn c-btn-emg ${isEmg ? 'active':''}" onclick="appCore.actions.toggleEmergency('${d.id}', ${!isEmg})">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </button>
+                    </div>
+                </div>`;
+            }).join('');
 
             document.getElementById('paginationControls').innerHTML = Array.from({length: Math.ceil(state.length / itemsPerPage)}, (_, i) => 
                 `<button class="page-btn ${i + 1 === currentPage ? 'active' : ''}" onclick="appCore.changePage(${i + 1})">${i + 1}</button>`
             ).join('');
 
-            document.getElementById('count-prep').innerText = state.filter(s => s.status === 'Preparing').length;
+            document.getElementById('count-charging').innerText = state.filter(s => s.status === 'Charging').length;
             document.getElementById('count-avail').innerText = state.filter(s => s.status === 'Available').length;
+        },
+
+        // --- DETAYLI PANEL YÖNETİMİ ---
+        openDetailedPanel: (id) => {
+            activePanelDeviceId = id;
+            document.getElementById('spDeviceId').innerText = id;
+            appCore.updateDetailedPanelUI();
+            
+            document.getElementById('devicePanel').classList.add('open');
+            document.getElementById('panelOverlay').classList.add('active');
+        },
+
+        closeDetailedPanel: () => {
+            activePanelDeviceId = null;
+            document.getElementById('devicePanel').classList.remove('open');
+            document.getElementById('panelOverlay').classList.remove('active');
+        },
+
+        updateDetailedPanelUI: () => {
+            if(!activePanelDeviceId) return;
+            const d = state.find(x => x.id === activePanelDeviceId);
+            if(!d) return;
+
+            const st = (d.status || "Off").toLowerCase();
+            const isOff = st === 'off', isEmg = d.emergency === true, isPlugged = d.plugged !== false;
+            const type = d.type || 'AC';
+            
+            let badgeClass = 'st-off'; let icon = 'fa-power-off';
+            if(st === 'available') { badgeClass = 'st-available'; icon = 'fa-check'; }
+            if(st === 'preparing') { badgeClass = 'st-preparing'; icon = 'fa-spinner fa-spin'; }
+            if(st === 'charging') { badgeClass = 'st-charging'; icon = 'fa-bolt'; }
+            if(st === 'emergency stop') { badgeClass = 'st-emergency'; icon = 'fa-triangle-exclamation'; }
+
+            const v = type === 'DC' ? 382.8 : 230.5;
+            const i = st === 'charging' ? (type === 'DC' ? 78.8 : 16.5) : 0;
+            const p = st === 'charging' ? (type === 'DC' ? 30.2 : 3.7) : 0;
+            const bootTime = d.lastBoot ? new Date(d.lastBoot).toLocaleString('tr-TR') : '-';
+            const hbTime = d.lastHeartbeat ? new Date(d.lastHeartbeat).toLocaleString('tr-TR') : '-';
+
+            const bodyHtml = `
+                <div class="sp-section">
+                    <div class="sp-section-title">Durum ve Bağlantı</div>
+                    <div class="sp-data-row">
+                        <span class="sp-label">Mevcut Statü</span>
+                        <span class="card-status ${badgeClass}" style="padding: 4px 10px; font-size:10px;"><i class="fa-solid ${icon}"></i> ${d.status || 'Off'}</span>
+                    </div>
+                    <div class="sp-data-row">
+                        <span class="sp-label">Cihaz Tipi</span>
+                        <span class="sp-value" style="color: var(--primary);">${type} İstasyon</span>
+                    </div>
+                    <div class="sp-data-row">
+                        <span class="sp-label">Son BootNotification</span>
+                        <span class="sp-value" style="font-size: 12px; font-weight: 500;">${bootTime}</span>
+                    </div>
+                    <div class="sp-data-row">
+                        <span class="sp-label">Son Heartbeat</span>
+                        <span class="sp-value" style="font-size: 12px; font-weight: 500; color: var(--success-text);"><i class="fa-solid fa-heart-pulse"></i> ${hbTime}</span>
+                    </div>
+                </div>
+
+                <div class="sp-section">
+                    <div class="sp-section-title">MeterValues (Anlık)</div>
+                    <div class="meter-grid">
+                        <div class="meter-box">
+                            <span>Kullanım</span>
+                            <strong>${Number(d.kwh || 0).toFixed(2)} <small style="font-size: 12px;">kWh</small></strong>
+                        </div>
+                        <div class="meter-box">
+                            <span>Voltaj</span>
+                            <strong>${v} <small style="font-size: 12px;">V</small></strong>
+                        </div>
+                        <div class="meter-box">
+                            <span>Akım</span>
+                            <strong>${i} <small style="font-size: 12px;">A</small></strong>
+                        </div>
+                        <div class="meter-box">
+                            <span>Aktif Güç</span>
+                            <strong>${p} <small style="font-size: 12px;">kW</small></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sp-section">
+                    <div class="sp-section-title">Güç Kontrolleri</div>
+                    <button class="sp-action-btn sp-btn-start" onclick="appCore.actions.start('${d.id}')" ${(!isOff && st!=='available') || isEmg ? 'disabled' : ''}>
+                        <i class="fa-solid fa-play"></i> Hazırlık Moduna Al
+                    </button>
+                    <button class="sp-action-btn sp-btn-stop" onclick="appCore.actions.stop('${d.id}')" ${isOff || isEmg ? 'disabled' : ''}>
+                        <i class="fa-solid fa-stop"></i> İşlemi Durdur
+                    </button>
+                    <button class="sp-action-btn sp-btn-plug" onclick="appCore.actions.togglePlug('${d.id}', ${!isPlugged})" ${st==='charging' || isEmg ? 'disabled' : ''}>
+                        <i class="fa-solid ${isPlugged ? 'fa-plug-circle-xmark' : 'fa-plug-circle-check'}"></i> ${isPlugged ? 'Kabloyu Çıkar' : 'Kabloyu Tak'}
+                    </button>
+                </div>
+
+                <div class="sp-section" style="border-color: rgba(239, 68, 68, 0.3);">
+                    <div class="sp-section-title" style="color: var(--danger-text);">Güvenlik</div>
+                    <div class="toggle-wrapper">
+                        <span><i class="fa-solid fa-triangle-exclamation"></i> Acil Durum (EMG)</span>
+                        <label class="switch">
+                            <input type="checkbox" ${(!isOff && isEmg) ? 'checked' : ''} onchange="appCore.actions.toggleEmergency('${d.id}', this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            `;
+            document.getElementById('spBodyContent').innerHTML = bodyHtml;
         }
     };
 
@@ -790,13 +756,7 @@
 
         setInterval(appUI.updateClock, 1000);
         appUI.updateClock();
-
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('token') && urlParams.get('email')) {
-            appAuth.verifyResetToken(urlParams.get('email'), urlParams.get('token'));
-        } else {
-            appAuth.checkState(); 
-        }
+        appAuth.checkState(); 
     };
 </script>
 

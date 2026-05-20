@@ -19,7 +19,7 @@
             --primary: #2563EB; 
             --primary-hover: #1D4ED8;
             --dark: #0B0F19; 
-            --bg-color: #0B0F19;
+            --bg-color: #0B0F19; /* En koyu siyahımsı arka plan */
             --surface: #111827; 
             --surface-hover: #1F2937;
             --text-dark: #F9FAFB; 
@@ -99,21 +99,78 @@
         /* --- YENİ GRID TASARIMI --- */
         .device-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; margin-bottom: 30px; }
         
-        .device-card { background: var(--surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 280px; }
-        .device-card:hover { border-color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .device-card { border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 280px; border: 1px solid var(--border-color); }
+        
+        /* KART ARKA PLAN RENKLERİ (Modern Gradient ve Glow Efekti) */
+        .card-bg-off { 
+            background: linear-gradient(135deg, var(--surface) 0%, var(--bg-color) 100%); 
+            border-color: var(--border-color);
+        }
+        .card-bg-off:hover { 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4); transform: translateY(-3px); 
+            background: linear-gradient(135deg, var(--surface-hover) 0%, var(--surface) 100%); 
+        }
+        
+        .card-bg-available { 
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.05) 100%); 
+            border-color: rgba(16, 185, 129, 0.5); 
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .card-bg-available:hover { 
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.1) 100%);
+            border-color: var(--success-text); 
+            box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255,255,255,0.1); 
+            transform: translateY(-3px);
+        }
+        
+        .card-bg-preparing { 
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(245, 158, 11, 0.05) 100%); 
+            border-color: rgba(245, 158, 11, 0.5); 
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .card-bg-preparing:hover { 
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.35) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-color: var(--warning-text); 
+            box-shadow: 0 10px 30px -5px rgba(245, 158, 11, 0.3), inset 0 1px 0 rgba(255,255,255,0.1); 
+            transform: translateY(-3px);
+        }
+        
+        .card-bg-charging { 
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.05) 100%); 
+            border-color: rgba(59, 130, 246, 0.5); 
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .card-bg-charging:hover { 
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.35) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-color: var(--info-text); 
+            box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255,255,255,0.1); 
+            transform: translateY(-3px);
+        }
+
+        .card-bg-emergency { 
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.05) 100%); 
+            border-color: rgba(239, 68, 68, 0.5); 
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .card-bg-emergency:hover { 
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0.1) 100%);
+            border-color: var(--danger-text); 
+            box-shadow: 0 10px 30px -5px rgba(239, 68, 68, 0.3), inset 0 1px 0 rgba(255,255,255,0.1); 
+            transform: translateY(-3px);
+        }
 
         /* Üst Header: İkon, Başlık, Tüketim ve Menü */
         .card-header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         
         .card-icon-title-group { display: flex; gap: 12px; align-items: flex-start; flex: 1;}
-        .card-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--bg-color); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--primary); border: 1px solid var(--border-color); flex-shrink: 0; }
+        .card-icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; color: white; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
         
         .card-title-group { display: flex; flex-direction: column; gap: 4px; }
-        .card-id { font-family: monospace; font-size: 15px; color: var(--text-dark); font-weight: 700; line-height: 1.2; }
+        .card-id { font-family: monospace; font-size: 15px; color: var(--text-dark); font-weight: 700; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
         .card-type { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         
         .card-kwh-group { text-align: right; margin-left: 10px; }
-        .card-kwh { font-size: 20px; font-weight: 800; color: var(--text-dark); line-height: 1; margin-bottom: 4px;}
+        .card-kwh { font-size: 20px; font-weight: 800; color: var(--text-dark); line-height: 1; margin-bottom: 4px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);}
         .card-kwh-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
 
         .card-menu-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0 0 0 10px; font-size: 16px; transition: color 0.2s; }
@@ -121,13 +178,13 @@
 
         /* Statü Etiketi (Badge) */
         .card-status-wrapper { margin-bottom: 20px; }
-        .card-status { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-status { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(0,0,0,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
         
-        .st-available { background: var(--success-bg); color: var(--success-text); border: 1px solid rgba(16, 185, 129, 0.2); }
-        .st-preparing { background: var(--warning-bg); color: var(--warning-text); border: 1px solid rgba(245, 158, 11, 0.2); }
-        .st-charging { background: var(--info-bg); color: var(--info-text); border: 1px solid rgba(59, 130, 246, 0.3); }
-        .st-off { background: var(--bg-color); color: var(--text-muted); border: 1px solid var(--border-color); }
-        .st-emergency { background: var(--danger-bg); color: var(--danger-text); border: 1px solid rgba(239, 68, 68, 0.4); animation: pulseRed 2s infinite; }
+        .st-available { color: var(--success-text); border: 1px solid rgba(16, 185, 129, 0.4); }
+        .st-preparing { color: var(--warning-text); border: 1px solid rgba(245, 158, 11, 0.4); }
+        .st-charging { color: var(--info-text); border: 1px solid rgba(59, 130, 246, 0.4); }
+        .st-off { color: var(--text-muted); border: 1px solid var(--border-color); }
+        .st-emergency { color: var(--danger-text); border: 1px solid rgba(239, 68, 68, 0.4); animation: pulseRed 2s infinite; }
 
         /* Şarj Animasyonu ve SoC (Orta Kısım) */
         .visual-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; margin-bottom: 20px; min-height: 50px; }
@@ -135,28 +192,27 @@
         .dc-soc-container { width: 100%; }
         .soc-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
         .soc-label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .soc-value { font-size: 18px; font-weight: 800; color: var(--success-text); }
-        .soc-bar { width: 100%; height: 6px; background: var(--bg-color); border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); }
-        .soc-fill { height: 100%; background: var(--success-text); border-radius: 10px; transition: width 0.5s; }
+        .soc-value { font-size: 18px; font-weight: 800; color: var(--success-text); text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);}
+        .soc-bar { width: 100%; height: 6px; background: rgba(0,0,0,0.4); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);}
+        .soc-fill { height: 100%; background: var(--success-text); border-radius: 10px; transition: width 0.5s; box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);}
 
-        .ac-charging { color: var(--success-text); font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 10px; animation: pulseText 1.5s infinite; justify-content: center; background: var(--success-bg); padding: 12px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2); }
-        @keyframes pulseText { 0% { opacity: 0.7; } 50% { opacity: 1; text-shadow: 0 0 8px rgba(16, 185, 129, 0.3); } 100% { opacity: 0.7; } }
+        .ac-charging { color: var(--success-text); font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 10px; animation: pulseText 1.5s infinite; justify-content: center; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3); }
+        @keyframes pulseText { 0% { opacity: 0.7; } 50% { opacity: 1; text-shadow: 0 0 12px rgba(16, 185, 129, 0.6); } 100% { opacity: 0.7; } }
 
         /* Kart Altı Butonlar (Action Row) */
-        .card-actions { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 16px; }
+        .card-actions { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px; }
         
-        .c-btn { padding: 10px; border-radius: 8px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition: 0.2s; color: var(--text-dark); background: var(--bg-color); border: 1px solid var(--border-color); }
-        .c-btn:hover:not(:disabled) { background: var(--surface-hover); }
+        .c-btn { padding: 10px; border-radius: 8px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition: 0.2s; color: var(--text-dark); background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); }
+        .c-btn:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
         
-        /* Özel Buton Stilleri */
-        .c-btn-start { color: var(--success-text); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05); }
-        .c-btn-start:hover:not(:disabled) { background: var(--success-text); color: white; border-color: var(--success-text); }
+        .c-btn-start { color: var(--success-text); border-color: rgba(16, 185, 129, 0.4); }
+        .c-btn-start:hover:not(:disabled) { background: var(--success-text); color: white; border-color: var(--success-text); box-shadow: 0 4px 12px rgba(16,185,129,0.3);}
         
-        .c-btn-stop { color: var(--danger-text); border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
-        .c-btn-stop:hover:not(:disabled) { background: var(--danger-text); color: white; border-color: var(--danger-text); }
+        .c-btn-stop { color: var(--danger-text); border-color: rgba(239, 68, 68, 0.4); }
+        .c-btn-stop:hover:not(:disabled) { background: var(--danger-text); color: white; border-color: var(--danger-text); box-shadow: 0 4px 12px rgba(239,68,68,0.3);}
         
-        .c-btn-emg { color: var(--warning-text); border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05); width: 40px; padding: 0; }
-        .c-btn-emg:hover:not(:disabled) { background: var(--warning-text); color: white; border-color: var(--warning-text); }
+        .c-btn-emg { color: var(--warning-text); border-color: rgba(245, 158, 11, 0.4); width: 40px; padding: 0; }
+        .c-btn-emg:hover:not(:disabled) { background: var(--warning-text); color: white; border-color: var(--warning-text); box-shadow: 0 4px 12px rgba(245,158,11,0.3);}
         .c-btn-emg.active { background: var(--warning-text); color: white; border-color: var(--warning-text); }
         
         .c-btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -599,10 +655,12 @@
                 const type = d.type || 'AC';
                 
                 let badgeClass = 'st-off'; let icon = 'fa-power-off'; let statusText = 'OFF';
-                if(st === 'available') { badgeClass = 'st-available'; icon = 'fa-check'; statusText = 'AVAILABLE'; }
-                if(st === 'preparing') { badgeClass = 'st-preparing'; icon = 'fa-spinner fa-spin'; statusText = 'PREPARING'; }
-                if(st === 'charging') { badgeClass = 'st-charging'; icon = 'fa-bolt'; statusText = 'CHARGING'; }
-                if(st === 'emergency stop') { badgeClass = 'st-emergency'; icon = 'fa-triangle-exclamation'; statusText = 'FAULTED'; }
+                let cardBgClass = 'card-bg-off';
+
+                if(st === 'available') { badgeClass = 'st-available'; icon = 'fa-check'; statusText = 'AVAILABLE'; cardBgClass = 'card-bg-available'; }
+                if(st === 'preparing') { badgeClass = 'st-preparing'; icon = 'fa-spinner fa-spin'; statusText = 'PREPARING'; cardBgClass = 'card-bg-preparing'; }
+                if(st === 'charging') { badgeClass = 'st-charging'; icon = 'fa-bolt'; statusText = 'CHARGING'; cardBgClass = 'card-bg-charging'; }
+                if(st === 'emergency stop') { badgeClass = 'st-emergency'; icon = 'fa-triangle-exclamation'; statusText = 'FAULTED'; cardBgClass = 'card-bg-emergency'; }
 
                 let visualHtml = '';
                 if(st === 'charging') {
@@ -621,11 +679,11 @@
                         visualHtml = `<div class="ac-charging"><i class="fa-solid fa-bolt fa-beat-fade"></i> Şarj Oluyor...</div>`;
                     }
                 } else if(st === 'preparing') {
-                    visualHtml = `<div class="ac-charging" style="color: var(--warning-text); background: var(--warning-bg); border-color: rgba(245, 158, 11, 0.2); animation: none;"><i class="fa-solid fa-hourglass-half"></i> Bağlantı Bekleniyor...</div>`;
+                    visualHtml = `<div class="ac-charging" style="color: var(--warning-text); background: rgba(245, 158, 11, 0.2); border-color: rgba(245, 158, 11, 0.3); animation: none;"><i class="fa-solid fa-hourglass-half"></i> Bağlantı Bekleniyor...</div>`;
                 }
 
                 return `
-                <div class="device-card" onclick="appCore.openDetailedPanel('${d.id}')">
+                <div class="device-card ${cardBgClass}" onclick="appCore.openDetailedPanel('${d.id}')">
                     
                     <div class="card-header-top">
                         <div class="card-icon-title-group">

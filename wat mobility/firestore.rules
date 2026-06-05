@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default deny global safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions for static validations
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\\\-]+$');
+    }
+
+    // Validate User document fields on creation and update
+    function isValidUser(user) {
+      return user.username is string && user.username.size() >= 3 && user.username.size() <= 50
+        && user.password is string && user.password.size() >= 3 && user.password.size() <= 256
+        && (!user.keys().contains('resetToken') || user.resetToken is string && user.resetToken.size() <= 128);
+    }
+
+    // Custom Users Collection Rules
+    match /users/{email} {
+      // Allow single document get for authentication checks. Strictly forbid list queries to prevent scanning all users.
+      allow get: if true;
+      allow list: if false;
+
+      // Allow registration of new user accounts if validation passes
+      allow create: if isValidUser(request.resource.data) 
+        && request.resource.data.keys().hasAll(['username', 'password'])
+        && request.resource.data.keys().size() >= 2;
+
+      // Allow updates to password or resetToken fields
+      allow update: if isValidUser(request.resource.data)
+        && (
+          // Action 1: Password reset request (triggers resetToken generation)
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['resetToken']) || 
+          // Action 2: Password change (updates password and clears/uses resetToken)
+          request.resource.data.diff(resource.data).affectedKeys().hasAll(['password']) 
+          && request.resource.data.diff(resource.data).affectedKeys().hasAny(['resetToken'])
+        );
+    }
+
+    // Validate Device document fields of WAT Mobility Panel
+    function isValidDevice(device) {
+      return device.id is string && device.id.size() <= 128
+        && device.status is string && (
+          device.status == 'Off' || 
+          device.status == 'Preparing' || 
+          device.status == 'Available' || 
+          device.status == 'Emergency Stop'
+        )
+        && (device.kwh is number || device.kwh is int)
+        && device.emergency is bool
+        && device.plugged is bool;
+    }
+
+    // Devices Collection Rules
+    match /devices/{deviceId} {
+      // Allow reading devices (single or list) for panel visualization
+      allow read: if isValidId(deviceId);
+      
+      // Allow write updates including status, kwh, emergency status, and plugged status
+      allow create, update: if isValidId(deviceId) && isValidDevice(request.resource.data);
+      allow delete: if false; // Deletion is disabled for system consistency
+    }
+  }
+}

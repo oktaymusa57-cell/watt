@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User accounts used for custom authentication on the WAT Mobility panel",
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Unique username of the user"
+        },
+        "password": {
+          "type": "string",
+          "description": "SHA-256 hashed password string for verification"
+        },
+        "resetToken": {
+          "type": "string",
+          "description": "Optional dynamic token used for secure password reset verification"
+        }
+      },
+      "required": ["username", "password"]
+    },
+    "Device": {
+      "title": "Device",
+      "description": "Smart electric charging stations tracking status and consumption",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique hardware identification number of the charging station"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Off", "Preparing", "Available", "Emergency Stop"],
+          "description": "Current power, availability, or fault status of the device"
+        },
+        "kwh": {
+          "type": "number",
+          "description": "Total energy consumption registered by the device in kWh"
+        },
+        "emergency": {
+          "type": "boolean",
+          "description": "Flag indicating if emergency stop (EMG) is triggered"
+        },
+        "plugged": {
+          "type": "boolean",
+          "description": "Flag indicating if the charger cable is plugged into a vehicle"
+        },
+        "lastUpdate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp tracking the last command or state change of the device"
+        }
+      },
+      "required": ["id", "status", "kwh", "emergency", "plugged"]
+    }
+  },
+  "firestore": {
+    "users/{email}": {
+      "schema": "User",
+      "description": "User registry indexed by unique email addresses"
+    },
+    "devices/{deviceId}": {
+      "schema": "Device",
+      "description": "Live devices monitored and controlled by the management panel"
+    }
+  }
+}
